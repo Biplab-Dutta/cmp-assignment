@@ -7,8 +7,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -74,18 +76,20 @@ fun GridItem(
     modifier: Modifier = Modifier,
     pixaImageModel: PixaImage,
 ) {
-    Surface {
+    Surface(
+        modifier = Modifier.fillMaxWidth()
+    ) {
         Row(
             modifier = Modifier
                 .padding(16.dp)
-                .height(IntrinsicSize.Min),
+                .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             Box(
                 modifier = Modifier
                     .weight(0.4f)
-                    .fillMaxHeight(),
+                    .aspectRatio(1f, matchHeightConstraintsFirst = true),
                 contentAlignment = Alignment.Center,
             ) {
                 var imageLoadResult by remember {
@@ -141,7 +145,7 @@ fun GridItem(
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     text = "Photo ID: ${pixaImageModel.id}",
-                    fontSize = 12.sp
+                    fontSize = 10.sp
                 )
             }
         }
