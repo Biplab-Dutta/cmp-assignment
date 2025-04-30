@@ -21,4 +21,4 @@ Also, the task was to create an android app using Jetpack Compose and an iOS app
 To make up for it, I implemented an extra feature, "Search" in android.
 
 ### App demo
-https://raw.githubusercontent.com/Biplab-Dutta/cmp-assignment/refs/heads/main/demo/PaleBlueDemo.gif
+<img src="https://raw.githubusercontent.com/Biplab-Dutta/cmp-assignment/refs/heads/main/demo/PaleBlueDemo.gif" width=300 height="500"/>
