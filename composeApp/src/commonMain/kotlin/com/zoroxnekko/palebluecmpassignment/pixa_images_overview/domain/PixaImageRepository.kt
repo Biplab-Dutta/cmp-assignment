@@ -4,5 +4,5 @@ import com.zoroxnekko.palebluecmpassignment.core.domain.DataError
 import com.zoroxnekko.palebluecmpassignment.core.domain.Result
 
 interface PixaImageRepository {
-    suspend fun fetchImages(q: String): Result<List<PixaImage>, DataError.Remote>
+    suspend fun fetchImages(q: String, page: Int): Result<List<PixaImage>, DataError.Remote>
 }

@@ -14,9 +14,7 @@ private const val PER_PAGE = 16
 class PixaImageRemoteDataSource(
     private val httpClient: HttpClient
 ) {
-    suspend fun fetchImages(
-        q: String,
-    ): Result<PixaImageHitsDto, DataError.Remote> {
+    suspend fun fetchImages(q: String, page: Int): Result<PixaImageHitsDto, DataError.Remote> {
         return safeCall<PixaImageHitsDto> {
             httpClient.get(
                 urlString = BASE_URL
@@ -25,6 +23,7 @@ class PixaImageRemoteDataSource(
                 parameter("q", q)
                 parameter("image_type", "ball")
                 parameter("per_page", PER_PAGE)
+                parameter("page", page)
             }
         }
     }

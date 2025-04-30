@@ -13,8 +13,9 @@ class PixaImageRepositoryImpl(
 ) : PixaImageRepository {
     override suspend fun fetchImages(
         q: String,
+        page: Int,
     ): Result<List<PixaImage>, DataError.Remote> {
-        return remoteDataSource.fetchImages(q).map { dto ->
+        return remoteDataSource.fetchImages(q, page).map { dto ->
             dto.hits.map { it.toDomainModel() }
         }
     }
