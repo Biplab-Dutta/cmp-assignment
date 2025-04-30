@@ -123,10 +123,7 @@ fun GridItem(
                                 ContentScale.Fit
                             },
                             modifier = Modifier
-                                .aspectRatio(
-                                    ratio = 1f,
-                                    matchHeightConstraintsFirst = true,
-                                )
+                                .fillMaxSize()
                                 .clip(RoundedCornerShape(8.dp))
                         )
                     }
