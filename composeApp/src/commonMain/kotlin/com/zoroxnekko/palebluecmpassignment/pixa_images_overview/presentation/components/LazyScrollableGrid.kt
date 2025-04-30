@@ -1,19 +1,22 @@
 package com.zoroxnekko.palebluecmpassignment.pixa_images_overview.presentation.components
 
-import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 
 @Composable
 fun <T> LazyScrollableGrid(
-    listState: LazyListState = rememberLazyListState(),
+    gridState: LazyGridState = rememberLazyGridState(),
     items: List<T>,
     itemKey: ((T) -> Any)? = null,
     itemContent: @Composable (T) -> Unit,
@@ -23,31 +26,36 @@ fun <T> LazyScrollableGrid(
     loadingMoreIndicator: @Composable () -> Unit,
 ) {
     val reachedBottom: Boolean by remember {
-        derivedStateOf { listState.reachedBottom() }
+        derivedStateOf { gridState.reachedBottom() }
     }
 
     LaunchedEffect(reachedBottom) {
         if (reachedBottom) onLoadMore()
     }
 
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(crossAxisCount)
+    Column(
+        modifier = Modifier.fillMaxSize()
     ) {
-        items(
-            items,
-            key = itemKey?.let { key -> { item: T -> key(item) } },
-        ) { result ->
-            itemContent(result)
+        LazyVerticalGrid(
+            modifier = Modifier.weight(1f),
+            state = gridState,
+            columns = GridCells.Fixed(crossAxisCount)
+        ) {
+            items(
+                items,
+                key = itemKey?.let { key -> { item: T -> key(item) } },
+            ) { result ->
+                itemContent(result)
+            }
         }
-
         if (isLoadingMore) {
-            item { loadingMoreIndicator }
+            loadingMoreIndicator()
         }
     }
 
 }
 
-private fun LazyListState.reachedBottom(buffer: Int = 1): Boolean {
+private fun LazyGridState.reachedBottom(buffer: Int = 1): Boolean {
     val lastVisibleItem = this.layoutInfo.visibleItemsInfo.lastOrNull()
     return lastVisibleItem?.index != 0 && lastVisibleItem?.index == this.layoutInfo.totalItemsCount - buffer
 }
