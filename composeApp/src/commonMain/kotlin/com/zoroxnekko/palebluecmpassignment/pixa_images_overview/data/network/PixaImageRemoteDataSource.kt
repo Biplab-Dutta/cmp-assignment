@@ -9,13 +9,13 @@ import io.ktor.client.request.get
 import io.ktor.client.request.parameter
 
 private const val BASE_URL = "https://pixabay.com/api/"
+private const val PER_PAGE = 16
 
 class PixaImageRemoteDataSource(
     private val httpClient: HttpClient
 ) {
     suspend fun fetchImages(
         q: String,
-        imageType: String
     ): Result<PixaImageHitsDto, DataError.Remote> {
         return safeCall<PixaImageHitsDto> {
             httpClient.get(
@@ -23,7 +23,8 @@ class PixaImageRemoteDataSource(
             ) {
                 parameter("key", "22577733-edb14e0d0f3f9c1a039c57e48")
                 parameter("q", q)
-                parameter("image_type", imageType)
+                parameter("image_type", "ball")
+                parameter("per_page", PER_PAGE)
             }
         }
     }
